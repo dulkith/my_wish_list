@@ -1,0 +1,360 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+a {
+    color: #E3E3E3;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #e35555;
+    text-decoration: none;
+}
+
+li {
+    cursor: pointer;
+}
+
+p {
+    font-weight: 300;
+    font-size: 0.7rem;
+}
+
+section {
+    scroll-snap-align: center;
+    display: flex;
+}
+
+
+/* NAVAIGATION */
+
+.navbar {
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.navbar a {
+    text-decoration: none;
+    float: left;
+}
+
+.logo {
+    width: 100px;
+}
+
+/* WISH LIST ITEM */
+.wishListItem{
+    width: 21rem;
+}
+
+
+.wishListItem:hover {
+    background-color: #fff7f7 !important;
+    border-color: #ff4c4c;
+}
+
+
+/* HOME BANNER */
+
+.home_wish_list_banner h1 {
+    font-weight: 900;
+    font-size: 6rem;
+    text-transform: uppercase;
+}
+
+.home_wish_list_banner {
+    max-width: 100%;
+    position: relative;
+    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 1)), to(rgba(0, 0, 0, 0)));
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    opacity: 0.5;
+}
+
+.navbar li a {
+    font-weight: bold;
+    color: #1d2124;
+    font-size: 20px;
+}
+
+.add_new_wish_btn {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.home_pizza_banner_elements {
+    position: absolute;
+    color: #ffffff;
+    text-align: center;
+}
+
+.home_pizza_banner_text {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    padding: 20px;
+}
+
+.home_pizza_banner_description {
+    top: 68%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    color: #cfcfcf;
+}
+
+.home_pizza_banner_order_button {
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+}
+
+/* Login form*/
+.container-login {
+    width: 75%;
+}
+
+/* SHOP INFORMATION */
+
+.shop_information_background {
+    background-color: #202020;
+    color: azure;
+}
+
+.shop_information_background span {
+    color: #fbf702;
+}
+
+.shop_information_title {
+    font-size: 25px;
+}
+
+.btn-main {
+    background-color: #fbf702;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.btn-main:hover {
+    background-color: #ffffff;
+    color: #1b1b00;
+}
+
+.shop_information_background p {
+    font-size: 1rem;
+}
+
+figure {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 240px;
+    margin-inline-end: 40px;
+}
+
+.pizzaImg {
+    float: left;
+    width: 100%;
+    height: 100%;
+}
+
+.pizzaContent {
+    padding: 10px 15px 10px;
+    float: left;
+    width: 100%;
+}
+
+.pizzaContent p {
+    font-size: 16px;
+}
+
+.topins {
+    display: none;
+}
+
+ul.selectToppingsTab {
+    width: 100%;
+    float: left;
+    border-bottom: solid 1px #e5e5e5;
+}
+
+ul,
+li {
+    list-style: none;
+    padding-left: 2px;
+}
+
+ul.selectToppingsList li a:hover,
+ul.selectToppingsList li a.selected {
+    border-color: #ff9c8b;
+}
+
+a {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    text-decoration: none;
+    outline: none;
+}
+
+ul.selectToppingsList li a {
+    display: block;
+    color: #808080;
+    font: normal 15px/17px 'Calibri';
+    border: solid 1px transparent;
+    border-radius: 4px;
+    position: relative;
+    height: 57px;
+    padding-left: 5px;
+    padding-right: 15px;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+}
+
+a {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    text-decoration: none;
+    outline: none;
+}
+
+.panel {
+    width: 100%;
+    float: left;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    position: relative;
+}
+
+.selectSizeBox {
+    margin-top: 50px;
+}
+
+.selectToppingsBox h4 {
+    font-size: 1.6rem;
+    font-weight: 200;
+    margin-bottom: 10px;
+}
+
+
+/* WISH LIST FORMS */
+
+.wish-list-form-label {
+    margin: 8px 0 0 0;
+    font-size: 15px;
+    font-weight: 900;
+}
+
+.wish-list-form-input {
+    width: 100%;
+    padding: 8px 8px;
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-radius: 3px !important;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1.2em;
+    background-color: transparent;
+    border-color: #cccccc;
+}
+
+.error-messages {
+    color: #ae0000;
+}
+
+
+/* ODER SUMMARY BOX */
+
+.summary-box h4 {
+    color: #ae0000;
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.summary-box small,
+.price {
+    color: #ae0000;
+}
+
+.summary-box strong {
+    color: #ae0000;
+}
+
+.btn-submit:hover {
+    background-color: #090909 !important;
+}
+
+
+/* DELIVER PAGE */
+
+.thank-you-img {
+    justify-content: center;
+    display: flex;
+}
+
+.party-image {
+    height: 60px;
+    width: 60px;
+    margin: 10px;
+    alignment: right;
+}
+
+.deliver-timer p {
+    font-size: 2em;
+}
+
+.clock-numbers {
+    font-size: 5em;
+    font-weight: 600;
+}
+
+.bg-deliver-timer-gradient {
+    background: #ff2323;
+    background: linear-gradient(to right, #ff2323, #8500e2);
+}
+
+.timer {
+    width: 500px;
+}
+
+
+/* FOOTER */
+
+.page-footer {
+    background-color: #111111;
+    color: #e73030;
+    font-size: 0.9rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+}
+
+
+/* TEST-------------------------------------------------------------------------------------------------------------------------------------- */
+
+.lol {
+    background: rgb(32, 32, 32);
+}
