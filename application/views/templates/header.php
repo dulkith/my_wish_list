@@ -1,18 +1,23 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
     <title>My Wish List</title>
     <!-- Google fonts import  -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
           rel="stylesheet">
     <!-- Bootstrap style sheet -->
     <link rel="stylesheet" href="<?php echo base_url("assets/css/bootstrap.css"); ?>"/>
-    <script type="text/javascript" src="<?php echo base_url("assets/js/jquery-3.5.1.min.js"); ?>"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo base_url("assets/js/bootstrap.js"); ?>"></script>
     <!-- Custom style sheet -->
     <link rel="stylesheet" href="<?php echo base_url("assets/css/main.css"); ?>"/>
     <script defer src="<?php echo base_url("assets/js/font-awsome/all.js"); ?>"></script>
-    <script type="text/javascript" src="<?php echo base_url("assets/js/jquery.countdown.js"); ?>"></script>
+    <script defer src="<?php echo base_url("assets/js/app.js"); ?>"></script>
+    <!--  CW2 required libraries  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.0/backbone-min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <!--	TEST-->
     <script>
         // ***ONLY FOR TEST

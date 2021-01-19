@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/my_wish_list_test';
+$config['base_url'] = 'http://localhost/my_wish_list';
 
 /*
 |--------------------------------------------------------------------------
@@ -213,7 +213,7 @@ $config['directory_trigger'] = 'd';
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 0;
+$config['log_threshold'] = 1;
 
 /*
 |--------------------------------------------------------------------------
@@ -362,7 +362,7 @@ $config['encryption_key'] = '';
 |	Whether to destroy session data associated with the old session ID
 |	when auto-regenerating the session ID. When set to FALSE, the data
 |	will be later deleted by the garbage collector.
-|
+|my_wish_list
 | Other session cookie settings are shared with the rest of the application,
 | except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
 |
