@@ -22,6 +22,13 @@ class WatchListItem extends CI_Model
         return $query->row_array();
     }
 
+    // get all watch list items by user id
+    public function get_user_watch_list_items($userId)
+    {
+        $query = $this->db->get_where('wish_list_items', array('userId' => $userId));
+        return $query->result_array();
+    }
+
     // add new watch list item
     public function add_new_watch_list_item($newWatchListItem)
     {

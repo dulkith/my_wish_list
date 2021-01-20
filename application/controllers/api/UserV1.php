@@ -20,8 +20,10 @@ class UserV1 extends REST_Controller
 
         // api access limitations configuration
         $this->methods['users_get']['limit'] = 1000;
+        $this->methods['users_post']['limit'] = 500;
         $this->methods['user_put']['limit'] = 500;
         $this->methods['users_delete']['limit'] = 100;
+        $this->methods['usersLogout_get']['limit'] = 100;
     }
 
     /**
@@ -67,7 +69,6 @@ class UserV1 extends REST_Controller
                     $this->response('User email address already exist', REST_Controller::HTTP_NOT_ACCEPTABLE);
                     return;
                 }
-
                 $salt = ('dukamywithslist@25492304kfdsfiit@.lk');
                 // hashed user password
                 $passwordHashed = md5($salt . $password);
@@ -130,9 +131,8 @@ class UserV1 extends REST_Controller
                                 'lname' => $isUserAvailableData->lname,
                                 'email' => $isUserAvailableData->email,
                                 'mobile' => $isUserAvailableData->mobile,
-                                'login' => 'true'
+                                'isLogin' => TRUE
                             );
-
                             // create access token payload
                             $tokenData['id'] = $isUserAvailableData->id;
                             $tokenData['fname'] = $isUserAvailableData->fname;
@@ -145,14 +145,14 @@ class UserV1 extends REST_Controller
                             // user login response
                             $this->response($response, REST_Controller::HTTP_OK);
                         } else {
-                            log_message('error', 'Login failed, wrong password');
-                            $this->response('Login failed, wrong password', REST_Controller::HTTP_UNAUTHORIZED);
+                            log_message('error', 'Login failed, Wrong password');
+                            $this->response('Login failed, Wrong password', REST_Controller::HTTP_UNAUTHORIZED);
                         }
                     }
                 } else {
                     // form validation error
-                    log_message('error', 'User login detail problem, please check and try again');
-                    $this->response('User login detail problem, please check and try again', REST_Controller::HTTP_NOT_ACCEPTABLE);
+                    log_message('error', 'User login detail problem, Please check and try again');
+                    $this->response('User login detail problem, Please check and try again', REST_Controller::HTTP_NOT_ACCEPTABLE);
                 }
             }
         } else {
@@ -160,5 +160,10 @@ class UserV1 extends REST_Controller
             log_message('error', 'User post action not found');
             $this->response(NULL, REST_Controller::HTTP_FORBIDDEN);
         }
+    }
+
+    public function usersLogout_get(){
+        // process views
+        $this->session->sess_destroy();
     }
 }

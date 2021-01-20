@@ -43,13 +43,18 @@
                                     class="fas fa-home fa-fw"></i> Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-heart fa-fw"></i> My Wish List</a>
+                        <a class="nav-link" href="#"><i class="fas fa-heart fa-fw"></i> Share Wish List</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="fas fa-info-circle fa-fw"></i> About</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-sign-in-alt fa-fw"></i> Login</a>
+                    <li id="loginButton" class="nav-item">
+                        <a onclick="login()" class="nav-link" href="#"><i class="fas fa-sign-in-alt fa-fw"></i>
+                            Login</a>
+                    </li>
+                    <li id="logoutButton" class="nav-item">
+                        <a onclick="logout()" class="nav-link" href="#"><i class="fas fa-sign-out-alt fa-fw"></i> Log
+                            Out</a>
                     </li>
                     <li class="nav-item">
                         <a href="<?php echo base_url(); ?>index.php/cart" class="nav-link d-flex flex-row">
@@ -64,7 +69,7 @@
     </nav>
 </header>
 <!-- Header End -->
-<script>
+<script type="text/javascript">
     window.onscroll = function () {
         handleScroll();
     }
@@ -76,4 +81,39 @@
             document.getElementById("wishListHeader").style.backgroundColor = "transparent";
         }
     }
+
+    // application domain logics
+    var globalUserDetails = globalUserDetails || {};
+    globalUserDetails.userid = sessionStorage.myWishListUserid;
+    globalUserDetails.userFname = sessionStorage.myWishListUserFname;
+    globalUserDetails.userLname = sessionStorage.myWishListUserLname;
+    globalUserDetails.userMobile = sessionStorage.myWishListUserMobile;
+    // check user has login or not
+    if (globalUserDetails.userid) {
+        document.getElementById("loginButton").children[0].style.display = "none"
+        // document.getElementById("logoutButton").hidden = false;
+    } else {
+        document.getElementById("logoutButton").children[0].style.display = "none"
+        // document.getElementById("loginButton").hidden = false;
+    }
+    console.log(globalUserDetails);
+
+    // user log out action
+    logout = function () {
+        sessionStorage.clear();
+        $.ajax('<?php echo base_url() ?>index.php/api/userV1/usersLogout', {
+            type:'GET',
+            success: function () {
+                location.href = "<?php echo base_url() ?>index.php/Login";
+            },
+            error: function () {
+                return callback(false);
+            }
+        });
+    }
+
+    login = function () {
+        location.href = "<?php echo base_url() ?>index.php/Login";
+    }
+
 </script>

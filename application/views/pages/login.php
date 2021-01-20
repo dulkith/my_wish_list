@@ -1,3 +1,10 @@
+<!-- Redirect user to home when try to load login page from url -->
+<script language="javascript">
+    if(globalUserDetails.userid) {
+        location.href = "<?php echo base_url() ?>index.php/WishListHome";
+    }
+</script>
+
 <!-- WISH LIST BANNER DETAILS -->
 <section class="home_wish_list_banner">
     <img class="img-fluid" alt="wish_list_banner"
@@ -118,7 +125,57 @@
         });
 
         var userLoginView = new UserLoginView();
-
+        //
+        //
+        // var Login = Backbone.Modal.extend({
+        //     urlRoot: "/my_wish_list/index.php/api/userV1/users/userAction/login"
+        //     idAttribute: 'myId',
+        //     defaults: {
+        //         "email": "", "password": ""
+        //     },
+        //     // getCustomUrl: function(data) {
+        //     //     switch (data) {
+        //     //         case 'login':
+        //     //             return 'http://localhost/my_wish_list/index.php/api/userV1/users/userAction/login' + this.id;
+        //     //         case 'register':
+        //     //             return 'http://localhost/my_wish_list/index.php/api/userV1/users/userAction/register';
+        //     // }
+        // });
+        //
+        //
+        // var loginModel = new Login();
+        // var UserLoginView = Backbone.View.extend({
+        //     el: "testContainer",
+        //     model: loginModel,
+        //     events: {
+        //         "click #login": "login",
+        //         "change #username": "onUsernameChange",
+        //         "change #password": "onPasswordChange"
+        //     },
+        //     initialize: function() {
+        //         // create the model here
+        //         this.model = loginModel;
+        //
+        //         // cache jQuery object within the view
+        //         this.email = this.$("#email");
+        //         this.$password = this.$("#password");
+        //     },
+        //
+        //     login: function() {
+        //         // just call save to make a post request with the data.
+        //         this.model.save();
+        //     },
+        //
+        //     onUsernameChange: function(e) {
+        //         this.model.set({ email: this.email.val() });
+        //     },
+        //     onPasswordChange: function(e) {
+        //         this.model.set({ password: this.$password.val() });
+        //     }
+        // });
+        //
+        //
+        // var loginView = new UserLoginView({ el: "testContainer" });
     </script>
 
 
