@@ -11,7 +11,6 @@ require_once(APPPATH . '/libraries/jwt/JWTImplement.php');
 
 class UserV1 extends REST_Controller
 {
-
     function __construct()
     {
         // parent class constructor
@@ -33,6 +32,25 @@ class UserV1 extends REST_Controller
     {
         // load all users from database
         $data = $this->UserModel->get_users();
+        // data response validate
+        if ($data) {
+            // valid response with user data
+            $this->response($data, REST_Controller::HTTP_OK);
+        } else {
+            // user data not found
+            $this->response(NULL, REST_Controller::HTTP_NOT_FOUND);
+        }
+    }
+
+    /**
+     * Get users by id end-point
+     */
+    public function user_get()
+    {
+
+        $userId = $this->get('id');
+        // load all users from database
+        $data = $this->UserModel->get_users($userId);
         // data response validate
         if ($data) {
             // valid response with user data
@@ -162,7 +180,8 @@ class UserV1 extends REST_Controller
         }
     }
 
-    public function usersLogout_get(){
+    public function usersLogout_get()
+    {
         // process views
         $this->session->sess_destroy();
     }

@@ -115,6 +115,30 @@ class MyWishListV1 extends REST_Controller
         }
     }
 
+    /**
+     * Get all watch list public items by user id end-point
+     */
+    public function wishListItemsAllPublicCount_get()
+    {
+        if ($this->get('userId')) {
+            // load all watch list item from database
+            $data = $this->WatchListItem->get_user_watch_list_items($this->get('userId'));
+            // data response validate
+            if ($data) {
+                $sendData = array("count"=>count($data));
+
+                // valid response with user data
+                $this->response($sendData, REST_Controller::HTTP_OK);
+            } else {
+                $sendData = array("count"=>0);
+                // user data not found
+                $this->response($sendData, REST_Controller::HTTP_OK);
+            }
+        } else {
+            $this->response('Bad Request!', REST_Controller::HTTP_BAD_REQUEST);
+        }
+    }
+
 
     /**
      * Login to system by enter email and password

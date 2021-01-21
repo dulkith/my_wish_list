@@ -58,16 +58,79 @@
                     <%});%>
                 </script>
             </div>
+
+            <div id="userData" class="row mt-3">
+                <script type="text/template" id="userDataTemplate">
+
+                    <div class="container" style="margin-bottom: 50px; margin-top: 12px">
+                        <b>Wish List Owner Name:</b> <%=user.fname%> <%=user.lname%><br>
+                        <b>Email Address:</b> <%=user.email%><br>
+                        <b>Mobile Number:</b> <%=user.mobile%>
+                    </div>
+
+                </script>
+            </div>
+
         </div>
     </section>
 </div>
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+        // user data
+        var User = Backbone.Model.extend({
+            urlRoot: function () {
+                return "<?php echo base_url() ?>index.php/api/userV1/user/id/<?php echo $_GET['userId']; ?>";
+            },
+            idAttribute: "id",
+            defaults: {
+                id: "",
+                fname: "",
+                lname: "",
+                email: "",
+                password: "",
+                mobile: "",
+                created: 0.00,
+            },
+        });
+
+        // create user object
+        var user = new User();
+
+        var UserView = Backbone.View.extend({
+
+            el: '#userData',
+            template: _.template($("#userDataTemplate").html()),
+            model: user,
+            initialize: function () {
+                console.log('Initializing User View');
+                this.model = new User();
+                // this.listenTo(this.model, "sync", this.render);
+                this.listenTo(this.model, 'sync add remove change sort', this.render);
+                this.model.fetch();
+                console.log(this.model);
+            },
+            onSync: function () {
+                this.render();
+                //other logic
+            },
+            render: function () {
+                // the persons will be "visible" in your template
+                console.log(this.model.toJSON());
+                this.$el.html(this.template({user: this.model.toJSON()}));
+                return this;
+            },
+        });
+
+        var userView = new UserView();
+
+
+        // wish list data
         var WishListItem = Backbone.Model.extend({
             urlRoot: function () {
                 return "<?php echo base_url() ?>index.php/api/myWishListV1/wishListItem"
-                    + this.get("word");
+                    + this.get("id");
             },
             idAttribute: "id",
             defaults: {

@@ -21,26 +21,19 @@ if (isset($_POST['email'])) {
     $mail->Password = "0772088783";
     $mail->SetFrom("xxxxxx@xxxxx.com");
     $mail->Subject = "MyWishList.lk";
-    $mail->Body = "<h1>MY_WISH_LIST.LK</h1>
-            Click this link to view whish list >>>>" . base_url() . "index.php/PublicLink?userId=1";
+    $mail->Body = "<h1>MY_WISH_LIST.LK</h1><img src='https://i.ibb.co/wB6rjpN/wish-list-logo-main.png' width='50' height='50' alt='' /><br>
+            Click this link to view wish list >>>>" . base_url() . "index.php/PublicLink?userId=1";
     $mail->AddAddress($_POST['email']);
     $mail->Send();
-//    if (!$mail->Send()) {
-//        echo "Mailer Error: " . $mail->ErrorInfo;
-//    } else {
-//        echo "Message has been sent";
-//    }
 }
 
 ?>
-
 
 <!-- WISH LIST BANNER DETAILS -->
 <section class="home_wish_list_banner">
     <img class="img-fluid" alt="wish_list_banner"
          src="<?php echo base_url("assets/images/sub_banner_wish_list.png"); ?>">
 </section>
-
 
 <div id="wishListItemList" class="container mb-5">
     <div class="col-md-12 text-center mt-2 pt-3 mb-4">
@@ -56,23 +49,26 @@ if (isset($_POST['email'])) {
                 <script type="text/template" id="wishListItemTemplate">
 
                     <!-- Email Modal -->
-                    <div class="modal fade" id="emailModalCenter" tabindex="-1" role="dialog"
+                    <div class="modal fade" style="width:1250px;" id="emailModalCenter" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">Wishlist Share by Email</h5>
+                                    <h4 class="modal-title" id="exampleModalLongTitle">Wish list Share by Email</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form method="post">
+                                <form method="post" id="formx">
                                     <div class="modal-body">
                                         Are you sure you want to share this wish list with public?
+                                        <br><br>
+                                        <b>Link:</b><br>
+                                        <a href="<?php echo base_url() ?>index.php/PublicLink?userId=1"><?php echo base_url() ?>index.php/PublicLink?userId=1</a>
                                     </div>
                                     <div class="mx-4 mt-3 row">
                                         <div class="col-12">
-                                            <label class="wish-list-form-label">Email Address</label>
+                                            <label class="wish-list-form-label">Email Address</label><br><br>
                                         </div>
                                         <div class="col-12">
                                             <textarea id="email" name="email" class="form-control"
@@ -83,11 +79,30 @@ if (isset($_POST['email'])) {
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE
                                         </button>
-                                        <input class="btn btn-danger" type="submit" name="submit" value="Submit">
-
+                                        <input class="btn btn-danger" type="submit" name="submit" value="Share">
                                         <!--                                        <button name="sendEmail" type="button" class="btn btn-danger">SHARE</button>-->
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container" style="margin-bottom: 20px">
+                        <div class="row">
+                            <div class="col-sm">
+                                <button id="wishListItemSortByIdBtn" type="submit" class="btn btn-dark">Sort By ID <i
+                                            class="fa fa-fw fa-sort"></i></button>
+                            </div>
+                            <div class="col-sm">
+                                <button id="wishListItemSortByProyorityBtn" type="submit" class="btn btn-dark">Sort By
+                                    PRIORITY <i
+                                            class="fa fa-fw fa-sort"></i></button>
+                            </div>
+                            <div class="col-sm">
+                                <button id="wishListItemSortByIdBtn" type="submit" class="btn btn-dark"
+                                        data-toggle="modal" data-target="#emailModalCenter"><i
+                                            class="far fa-envelope"></i> SHARE BY EMAIL
+                                </button>
                             </div>
                         </div>
                     </div>
