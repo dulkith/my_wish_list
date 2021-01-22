@@ -12,13 +12,14 @@ h4 {
 }
 
 a {
-    color: #E3E3E3;
+    color: #cb4646;
     text-decoration: none;
 }
 
 a:hover {
-    color: #e35555;
+    color: #e90b0b;
     text-decoration: none;
+    font-weight: 600;
 }
 
 li {

@@ -49,9 +49,9 @@ class MyWishListV1 extends REST_Controller
     public function wishListItem_get()
     {
         if ($this->session->userdata('isLogin')) {
-            if ($this->get('itemId')) {
+            if ($this->get('id')) {
                 // get watch list item by id
-                $data = $this->WatchListItem->get_watch_list_items($this->get('itemId'));
+                $data = $this->WatchListItem->get_watch_list_items($this->get('id'));
                 // data response validate
                 if ($data) {
                     // valid response with user data
@@ -93,6 +93,29 @@ class MyWishListV1 extends REST_Controller
         }
     }
 
+
+    /**
+     * Get all watch list public items by user id end-point
+     */
+    public function wishListItemsAllPublic_get()
+    {
+        if ($this->get('userId')) {
+            // load all watch list item from database
+            $data = $this->WatchListItem->get_user_watch_list_items($this->get('userId'));
+            // data response validate
+            if ($data) {
+                // valid response with user data
+                $this->response($data, REST_Controller::HTTP_OK);
+            } else {
+                // user data not found
+                $this->response(NULL, REST_Controller::HTTP_NOT_FOUND);
+            }
+        } else {
+            $this->response('Bad Request!', REST_Controller::HTTP_BAD_REQUEST);
+        }
+    }
+
+
     /**
      * Login to system by enter email and password
      * Or register in system with user profile details
@@ -108,6 +131,7 @@ class MyWishListV1 extends REST_Controller
             header('Content-type: application/json');
             // get new wish list input values
             $itemTitle = $this->post('itemTitle');
+            $itemDescription = $this->post('itemDescription');
             $webSiteTitle = $this->post('webSiteTitle');
             $webSiteUrl = $this->post('webSiteUrl');
             $itemImageUrl = $this->post('itemImageUrl');
@@ -129,19 +153,20 @@ class MyWishListV1 extends REST_Controller
                 // validate web site url
                 if (filter_var($webSiteUrl, FILTER_VALIDATE_URL) === FALSE) {
                     log_message('info', 'New wish list website url invalid');
-                    $this->response('New wish list website url invalid', REST_Controller::HTTP_NOT_FOUND);
+                    $this->response('Wish list website url invalid', REST_Controller::HTTP_NOT_FOUND);
                     return;
                 }
                 // validate image url
                 if (filter_var($itemImageUrl, FILTER_VALIDATE_URL) === FALSE) {
                     log_message('info', 'New wish list image url invalid');
-                    $this->response('New wish list image url invalid', REST_Controller::HTTP_NOT_FOUND);
+                    $this->response('Wish list image url invalid', REST_Controller::HTTP_NOT_FOUND);
                     return;
                 }
                 // create new wish list item object
                 $newWishListItemData = array(
                     'title' => strip_tags($itemTitle),
                     'websiteTitle' => strip_tags($webSiteTitle),
+                    'description' => strip_tags($itemDescription),
                     'websiteUrl' => strip_tags($webSiteUrl),
                     'imageUrl' => strip_tags($itemImageUrl),
                     'price' => strip_tags($price),
@@ -155,7 +180,7 @@ class MyWishListV1 extends REST_Controller
                 if ($newWishListItemResponse) {
                     // new user registration success
                     log_message('info', 'Wish list item update successfully!');
-                    $this->response('Wish list item update successfully!', REST_Controller::HTTP_OK);
+                    $this->response('Wish list item data save successfully!', REST_Controller::HTTP_OK);
                 } else {
                     // new user registration error
                     log_message('error', 'Wish list item update error');
@@ -164,7 +189,7 @@ class MyWishListV1 extends REST_Controller
             } else {
                 // form validation error
                 log_message('error', 'Wish list item update detail problem, Please check and try again');
-                $this->response('New wish list item detail problem, Please check and try again', REST_Controller::HTTP_NOT_ACCEPTABLE);
+                $this->response('Wish list item detail problem, Please check and try again', REST_Controller::HTTP_NOT_ACCEPTABLE);
             }
         } else {
             $this->response('Unauthorized to access the requested resource!', REST_Controller::HTTP_UNAUTHORIZED);
@@ -189,6 +214,7 @@ class MyWishListV1 extends REST_Controller
                 // get new wish list input values
                 $id = $this->get('id');
                 $itemTitle = $this->put('itemTitle');
+                $itemDescription = $this->put('$itemDescription');
                 $webSiteTitle = $this->put('webSiteTitle');
                 $webSiteUrl = $this->put('webSiteUrl');
                 $itemImageUrl = $this->put('itemImageUrl');
@@ -211,19 +237,20 @@ class MyWishListV1 extends REST_Controller
                     // validate web site url
                     if (filter_var($webSiteUrl, FILTER_VALIDATE_URL) === FALSE) {
                         log_message('info', 'New wish list website url invalid');
-                        $this->response('New wish list website url invalid', REST_Controller::HTTP_NOT_FOUND);
+                        $this->response('Wish list website url invalid', REST_Controller::HTTP_NOT_FOUND);
                         return;
                     }
                     // validate image url
                     if (filter_var($itemImageUrl, FILTER_VALIDATE_URL) === FALSE) {
                         log_message('info', 'New wish list image url invalid');
-                        $this->response('New wish list image url invalid', REST_Controller::HTTP_NOT_FOUND);
+                        $this->response('Wish list image url invalid', REST_Controller::HTTP_NOT_FOUND);
                         return;
                     }
                     // create new wish list item object
                     $newWishListItemData = array(
                         'id' => strip_tags($id),
                         'title' => strip_tags($itemTitle),
+                        'description' => strip_tags($itemDescription),
                         'websiteTitle' => strip_tags($webSiteTitle),
                         'websiteUrl' => strip_tags($webSiteUrl),
                         'imageUrl' => strip_tags($itemImageUrl),
@@ -236,17 +263,17 @@ class MyWishListV1 extends REST_Controller
                     $newWishListItemResponse = $this->WatchListItem->update_watch_list_item_details($newWishListItemData);
                     if ($newWishListItemResponse) {
                         // new user registration success
-                        log_message('info', 'New wish list item add successfully!');
-                        $this->response('New wish list item add successfully!', REST_Controller::HTTP_OK);
+                        log_message('info', 'Wish list item data save successfully!');
+                        $this->response('Wishlist item data save successfully!', REST_Controller::HTTP_OK);
                     } else {
                         // new user registration error
-                        log_message('error', 'New wish list item add error');
-                        $this->response('New wish list item add error', REST_Controller::HTTP_BAD_REQUEST);
+                        log_message('error', 'Wish list item error');
+                        $this->response('Wish list item error', REST_Controller::HTTP_BAD_REQUEST);
                     }
                 } else {
                     // form validation error
-                    log_message('error', 'New wish list item detail problem, Please check and try again');
-                    $this->response('New wish list item  detail problem, Please check and try again', REST_Controller::HTTP_NOT_ACCEPTABLE);
+                    log_message('error', 'Wish list item detail problem, Please check and try again');
+                    $this->response('Wish list item detail problem, Please check and try again', REST_Controller::HTTP_NOT_ACCEPTABLE);
                 }
             } else {
                 // invalid action
@@ -263,19 +290,20 @@ class MyWishListV1 extends REST_Controller
      */
     protected function wishListItem_delete()
     {
+        header('Content-type: application/json');
 
         if ($this->session->userdata('isLogin')) {
-            if ($this->get('itemId')) {
+            if ($this->get('id')) {
                 // validate watch list item
                 // get watch list item by id
-                $data = $this->WatchListItem->get_watch_list_items($this->get('itemId'));
+                $data = $this->WatchListItem->get_watch_list_items($this->get('id'));
                 // data response validate
                 if (!$data) {
                     // user data not found
                     $this->response(NULL, REST_Controller::HTTP_NOT_FOUND);
                 }
                 // delete watch list item by id
-                $data = $this->WatchListItem->delete_watch_list_item_by_id($this->get('itemId'));
+                $data = $this->WatchListItem->delete_watch_list_item_by_id($this->get('id'));
                 // data response validate
                 if ($data) {
                     // valid response with user data

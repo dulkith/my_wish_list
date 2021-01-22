@@ -88,6 +88,11 @@
     globalUserDetails.userFname = sessionStorage.myWishListUserFname;
     globalUserDetails.userLname = sessionStorage.myWishListUserLname;
     globalUserDetails.userMobile = sessionStorage.myWishListUserMobile;
+
+<!--    --><?php //$_SESSION["uid"] ?>// = globalUserDetails.userid;
+//    <?php //$_SESSION["fname"] ?>// = globalUserDetails.myWishListUserFname;
+//    <?php //$_SESSION["lname"] ?>// = globalUserDetails.myWishListUserLname;
+
     // check user has login or not
     if (globalUserDetails.userid) {
         document.getElementById("loginButton").children[0].style.display = "none"
@@ -102,7 +107,7 @@
     logout = function () {
         sessionStorage.clear();
         $.ajax('<?php echo base_url() ?>index.php/api/userV1/usersLogout', {
-            type:'GET',
+            type: 'GET',
             success: function () {
                 location.href = "<?php echo base_url() ?>index.php/Login";
             },

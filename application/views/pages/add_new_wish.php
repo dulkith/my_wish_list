@@ -11,7 +11,7 @@
          src="<?php echo base_url("assets/images/sub_banner_wish_list.png"); ?>">
 </section>
 
-<div id="testContainer" class="container">
+<div id="testContainer" class="container mb-5">
     <div class="col-md-12 mt-2 pt-3 mb-4">
         <h1>Add New Wish Item</h1>
     </div>
@@ -23,6 +23,16 @@
         <div class="col-12">
             <input id="itemTitle" name="itemTitle" class="wish-list-form-input" placeholder="Enter wish list item title"
                    type="text">
+            <span class="mt-3 error-messages"><?php echo form_error('itemTitle'); ?></span>
+        </div>
+    </div>
+
+    <div class="mx-4 mt-3 row">
+        <div class="col-12">
+            <label class="wish-list-form-label">Item Description</label>
+        </div>
+        <div class="col-12">
+            <textarea id="itemDescription" name="itemDescription" class="form-control"  placeholder="Enter wish list item description"rows="3"></textarea>
             <span class="mt-3 error-messages"><?php echo form_error('itemTitle'); ?></span>
         </div>
     </div>
@@ -89,9 +99,9 @@
         </div>
     </div>
 
-    <div class="col-12 mt-5 mb-3 d-flex justify-content-center">
+    <div class="col-12 mt-5 mb-5 d-flex justify-content-center">
         <button id="newWishListItemSubmitBtn" type="submit" class="btn btn-outline-danger btn-lg checkout-btn">
-            SAVE ITEM
+            SAVE WISH LIST ITEM
         </button>
     </div>
 
@@ -104,15 +114,18 @@
         },
         idAttribute: "",
         defaults: {
-            itemTitle: "",
-            webSiteTitle: "",
-            webSiteUrl: "",
-            itemImageUrl: "",
-            price: "",
-            quantity: "",
-            itemPriority: "",
+            id: "",
+            title: "",
+            description: "",
+            imageUrl: "",
+            websiteUrl: "",
+            websiteTitle: "",
+            price: 0.00,
+            quantity: 0,
+            priority: 3,
             userId: "",
-        }
+            created: "",
+        },
     });
 
     var NewWishListItemView = Backbone.View.extend({
@@ -131,6 +144,7 @@
             // create the model here
             var itemTitle = $('#itemTitle').val();
             var webSiteTitle = $('#webSiteTitle').val();
+            var itemDescription = $('#itemDescription').val();
             var webSiteUrl = $('#webSiteUrl').val();
             var itemImageUrl = $('#itemImageUrl').val();
             var price = $('#price').val();
@@ -142,6 +156,7 @@
             var newWishListItemData = {
                 'itemTitle': itemTitle,
                 'webSiteTitle': webSiteTitle,
+                'itemDescription': itemDescription,
                 'webSiteUrl': webSiteUrl,
                 'itemImageUrl': itemImageUrl,
                 'price': price,
