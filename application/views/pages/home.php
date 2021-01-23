@@ -64,7 +64,8 @@ if (isset($_POST['email'])) {
                                         Are you sure you want to share this wish list with public?
                                         <br><br>
                                         <b>Link:</b><br>
-                                        <a href="<?php echo base_url() ?>index.php/PublicLink?userId=1"><?php echo base_url() ?>index.php/PublicLink?userId=1</a>
+                                        <a href="<?php echo base_url() ?>index.php/PublicLink?userId=1"><?php echo base_url() ?>
+                                            index.php/PublicLink?userId=1</a>
                                     </div>
                                     <div class="mx-4 mt-3 row">
                                         <div class="col-12">
@@ -132,6 +133,15 @@ if (isset($_POST['email'])) {
                                 <br>
                                 <span style="margin-right: 10px; font-weight: 600;">Priority:</span>
                                 <%=wishListItem.priority%>
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+                                        <button id="deleteNewWishListItemBtn" type="submit" value=<%=wishListItem.id%>
+                                                class="btn btn-danger checkout-btn">
+                                            <i class="far fa-trash-alt"></i> DELETE
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </a>
@@ -204,8 +214,35 @@ if (isset($_POST['email'])) {
                     "click #wishListItemAction": 'wishListItemAction',
                     'click #wishListItemSortByProyorityBtn': 'wishListItemSortByProyority',
                     'click #wishListItemSortByIdBtn': 'wishListItemSortById',
+                    "click #deleteNewWishListItemBtn": 'deleteNewWishListItem',
                 },
                 // delete item
+                deleteNewWishListItem: function (e) {
+                    console.log('Start delete wish list item...');
+                    $selectedId = $(e.currentTarget).attr('value');
+                    var modelToremove = new WishListItem({
+                        id: $selectedId
+                    });
+                    modelToremove.destroy(
+                        {
+                            url: "<?php echo base_url() ?>index.php/api/myWishListV1/wishListItem/id/" + $selectedId,
+                            success: async function () {
+                                app.itemList.remove(modelToremove);
+                                WishListItemsView.addAll();
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Delete wish-list item Successfully!',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                })
+                                await sleep(2000);
+                                location.href = "<?php echo base_url() ?>index.php/wishListHome/index";
+                            },
+                            error: function (errorResponse) {
+                                console.log(errorResponse)
+                            }
+                        });
+                },
                 wishListItemAction: function () {
                     console.log('Start Delete...');
                     location.href = "<?php echo base_url() ?>index.php/WishListHome";
