@@ -32,14 +32,13 @@ if (isset($_POST['email'])) {
 <!-- WISH LIST BANNER DETAILS -->
 <section class="home_wish_list_banner">
     <img class="img-fluid" alt="wish_list_banner"
-         src="<?php echo base_url("assets/images/sub_banner_wish_list.png"); ?>">
+        src="<?php echo base_url("assets/images/sub_banner_wish_list.png"); ?>">
 </section>
 
 <div id="wishListItemList" class="container mb-5">
     <div class="col-md-12 text-center mt-2 pt-3 mb-4">
         <button onclick="addNewWish()" type="button" class="btn btn-outline-danger w-50 p-4"><i
-                    class="fas fa-plus fa-2x"></i> <span
-                    class="add_new_wish_btn">&nbsp;NEW WISH</span></button>
+                class="fas fa-plus fa-2x"></i> <span class="add_new_wish_btn">&nbsp;NEW WISH</span></button>
     </div>
 
     <!-- MY WISH LIST ITEMS HOME-->
@@ -49,8 +48,8 @@ if (isset($_POST['email'])) {
                 <script type="text/template" id="wishListItemTemplate">
 
                     <!-- Email Modal -->
-                    <div class="modal fade" style="width:1250px;" id="emailModalCenter" tabindex="-1" role="dialog"
-                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal fade" id="emailModalCenter" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -73,8 +72,9 @@ if (isset($_POST['email'])) {
                                         </div>
                                         <div class="col-12">
                                             <textarea id="email" name="email" class="form-control"
-                                                      placeholder="Enter aemail address" rows="3"></textarea>
-                                            <span class="mt-3 error-messages"><?php echo form_error('itemTitle'); ?></span>
+                                                placeholder="Enter aemail address" rows="3"></textarea>
+                                            <span
+                                                class="mt-3 error-messages"><?php echo form_error('itemTitle'); ?></span>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -92,17 +92,16 @@ if (isset($_POST['email'])) {
                         <div class="row">
                             <div class="col-sm">
                                 <button id="wishListItemSortByIdBtn" type="submit" class="btn btn-dark">Sort By ID <i
-                                            class="fa fa-fw fa-sort"></i></button>
+                                        class="fa fa-fw fa-sort"></i></button>
                             </div>
                             <div class="col-sm">
                                 <button id="wishListItemSortByProyorityBtn" type="submit" class="btn btn-dark">Sort By
-                                    PRIORITY <i
-                                            class="fa fa-fw fa-sort"></i></button>
+                                    PRIORITY <i class="fa fa-fw fa-sort"></i></button>
                             </div>
                             <div class="col-sm">
                                 <button id="wishListItemSortByIdBtn" type="submit" class="btn btn-dark"
-                                        data-toggle="modal" data-target="#emailModalCenter"><i
-                                            class="far fa-envelope"></i> SHARE BY EMAIL
+                                    data-toggle="modal" data-target="#emailModalCenter"><i class="far fa-envelope"></i>
+                                    SHARE BY EMAIL
                                 </button>
                             </div>
                         </div>
@@ -112,9 +111,7 @@ if (isset($_POST['email'])) {
 
                     <a href="<?php echo base_url() ?>index.php/Edit?id=<%=wishListItem.id%>">
                         <div id="wishListItemAction" class="card mr-4 mb-4 wishListItem" role="button">
-                            <img class="card-img-top"
-                                 src='<%=wishListItem.imageUrl%>'
-                                 alt="Card image cap">
+                            <img class="card-img-top" src='<%=wishListItem.imageUrl%>' alt="Card image cap">
                             <div class="card-body">
                                 <h5 class="card-title"><%=wishListItem.title%></h5>
                                 <p class="card-text"><%=wishListItem.description%></p>
@@ -123,7 +120,7 @@ if (isset($_POST['email'])) {
                                 <%=wishListItem.websiteTitle%>
                                 <br>
                                 <span style="margin-right: 10px; font-weight: 600">Website:</span> <a
-                                        href="<%=wishListItem.websiteUrl%>">CLICK HERE</a>
+                                    href="<%=wishListItem.websiteUrl%>">CLICK HERE</a>
                                 <br>
                                 <span style="margin-right: 10px; font-weight: 600">Price:</span> Rs
                                 <%=wishListItem.price%>
@@ -137,7 +134,7 @@ if (isset($_POST['email'])) {
                                 <div class="row">
                                     <div class="col">
                                         <button id="deleteNewWishListItemBtn" type="submit" value=<%=wishListItem.id%>
-                                                class="btn btn-danger checkout-btn">
+                                            class="btn btn-danger checkout-btn">
                                             <i class="far fa-trash-alt"></i> DELETE
                                         </button>
                                     </div>
@@ -153,147 +150,145 @@ if (isset($_POST['email'])) {
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        var WishListItem = Backbone.Model.extend({
-            urlRoot: function () {
-                return "<?php echo base_url() ?>index.php/api/myWishListV1/wishListItem"
-                    + this.get("word");
-            },
-            idAttribute: "id",
-            defaults: {
-                id: "",
-                title: "",
-                description: "",
-                imageUrl: "",
-                websiteUrl: "",
-                websiteTitle: "",
-                price: 0.00,
-                quantity: 0,
-                priority: 3,
-                userId: "",
-                created: "",
-            },
-        });
-
-        var WishListItemCollection = Backbone.Collection.extend({
-            model: WishListItem,
-            prefix: "",
-            url: function () {
-                console.log("<?php echo base_url() ?>index.php/api/myWishListV1/wishListItemsAll/userId/" + globalUserDetails.userid)
-                return "<?php echo base_url() ?>index.php/api/myWishListV1/wishListItemsAll/userId/" + globalUserDetails.userid;
-            },
-        });
-
-        // create collections of Wish list item object
-        var wishListItems = new WishListItemCollection();
-
-        var WishListItemsView = Backbone.View.extend(
-            {
-                el: '#wishListItemsList',
-                template: _.template($("#wishListItemTemplate").html()),
-                model: wishListItems,
-                initialize: function () {
-                    console.log('Initializing Wish List Items View');
-                    this.model = new WishListItemCollection();
-                    // this.listenTo(this.model, "sync", this.render);
-                    this.listenTo(this.model, 'sync add remove change sort', this.render);
-                    this.model.fetch();
-                    console.log(this.model);
-                },
-                onSync: function () {
-                    this.render();
-                    //other logic
-                },
-                render: function () {
-                    // the persons will be "visible" in your template
-                    console.log(this.model.toJSON());
-                    this.$el.html(this.template({wishListItem: this.model.toJSON()}));
-                    return this;
-                },
-                events: {
-                    "click #wishListItemAction": 'wishListItemAction',
-                    'click #wishListItemSortByProyorityBtn': 'wishListItemSortByProyority',
-                    'click #wishListItemSortByIdBtn': 'wishListItemSortById',
-                    "click #deleteNewWishListItemBtn": 'deleteNewWishListItem',
-                },
-                // delete item
-                deleteNewWishListItem: function (e) {
-                    console.log('Start delete wish list item...');
-                    $selectedId = $(e.currentTarget).attr('value');
-                    var modelToremove = new WishListItem({
-                        id: $selectedId
-                    });
-                    modelToremove.destroy(
-                        {
-                            url: "<?php echo base_url() ?>index.php/api/myWishListV1/wishListItem/id/" + $selectedId,
-                            success: async function () {
-                                app.itemList.remove(modelToremove);
-                                WishListItemsView.addAll();
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Delete wish-list item Successfully!',
-                                    showConfirmButton: false,
-                                    timer: 2000
-                                })
-                                await sleep(2000);
-                                location.href = "<?php echo base_url() ?>index.php/wishListHome/index";
-                            },
-                            error: function (errorResponse) {
-                                console.log(errorResponse)
-                            }
-                        });
-                },
-                wishListItemAction: function () {
-                    console.log('Start Delete...');
-                    location.href = "<?php echo base_url() ?>index.php/WishListHome";
-                },
-                wishListItemSortById: function () {
-                    console.log('Start Sort By Id...');
-                    this.model.comparator = 'id';
-                    this.model.sort();
-                    WishListItemsView.addAll();
-                },
-                wishListItemSortByProyority: function () {
-                    console.log('Start Sort By Priority...');
-                    this.model.comparator = 'priority';
-                    this.model.sort();
-                    WishListItemsView.addAll();
-                }
-                // initialize: function () {
-                //     console.log('Initializing Wish List Items View');
-                //     this.model.on('sync', this.render, this)
-                // },
-                // render: function () {
-                //     // display content
-                //     $('#wishListItemList').empty(); // remove previous words
-                //     var self = this;
-                //     this.model.each(function (c) {
-                //         console.log(c);
-                //         // var cimg = "<div>" + c.get('word') + "</div>"
-                //         self.$el.append(self.template(c.attributes))
-                //     })
-                // },
-            }
-        )
-
-        var wishListItemsView = new WishListItemsView();
-
+$(document).ready(function() {
+    var WishListItem = Backbone.Model.extend({
+        urlRoot: function() {
+            return "<?php echo base_url() ?>index.php/api/myWishListV1/wishListItem" +
+                this.get("word");
+        },
+        idAttribute: "id",
+        defaults: {
+            id: "",
+            title: "",
+            description: "",
+            imageUrl: "",
+            websiteUrl: "",
+            websiteTitle: "",
+            price: 0.00,
+            quantity: 0,
+            priority: 3,
+            userId: "",
+            created: "",
+        },
     });
 
-    addNewWish = function () {
-        location.href = "<?php echo base_url() ?>index.php/AddNewWish";
-    }
+    var WishListItemCollection = Backbone.Collection.extend({
+        model: WishListItem,
+        prefix: "",
+        url: function() {
+            console.log(
+                "<?php echo base_url() ?>index.php/api/myWishListV1/wishListItemsAll/userId/" +
+                globalUserDetails.userid)
+            return "<?php echo base_url() ?>index.php/api/myWishListV1/wishListItemsAll/userId/" +
+                globalUserDetails.userid;
+        },
+    });
 
-    function getPriority(val) {
-        switch (priority) {
-            case "1":
-                return 'A'
-            case "2":
-                return 'B'
-            case "3":
-                return 'C'
+    // create collections of Wish list item object
+    var wishListItems = new WishListItemCollection();
+
+    var WishListItemsView = Backbone.View.extend({
+        el: '#wishListItemsList',
+        template: _.template($("#wishListItemTemplate").html()),
+        model: wishListItems,
+        initialize: function() {
+            console.log('Initializing Wish List Items View');
+            this.model = new WishListItemCollection();
+            // this.listenTo(this.model, "sync", this.render);
+            this.listenTo(this.model, 'sync add remove change sort', this.render);
+            this.model.fetch();
+            console.log(this.model);
+        },
+        onSync: function() {
+            this.render();
+            //other logic
+        },
+        render: function() {
+            // the persons will be "visible" in your template
+            console.log(this.model.toJSON());
+            this.$el.html(this.template({
+                wishListItem: this.model.toJSON()
+            }));
+            return this;
+        },
+        events: {
+            "click #wishListItemAction": 'wishListItemAction',
+            'click #wishListItemSortByProyorityBtn': 'wishListItemSortByProyority',
+            'click #wishListItemSortByIdBtn': 'wishListItemSortById',
+            "click #deleteNewWishListItemBtn": 'deleteNewWishListItem',
+        },
+        // delete item
+        deleteNewWishListItem: function(e) {
+            console.log('Start delete wish list item...');
+            $selectedId = $(e.currentTarget).attr('value');
+            var modelToremove = new WishListItem({
+                id: $selectedId
+            });
+            modelToremove.destroy({
+                url: "<?php echo base_url() ?>index.php/api/myWishListV1/wishListItem/id/" +
+                    $selectedId,
+                success: async function() {
+                    WishListItemsView.addAll();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Delete wish-list item Successfully!',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                },
+                error: function(errorResponse) {
+                    console.log(errorResponse)
+                }
+            });
+        },
+        wishListItemAction: function() {
+            console.log('Start Delete...');
+            location.href = "<?php echo base_url() ?>index.php/WishListHome";
+        },
+        wishListItemSortById: function() {
+            console.log('Start Sort By Id...');
+            this.model.comparator = 'id';
+            this.model.sort();
+            WishListItemsView.addAll();
+        },
+        wishListItemSortByProyority: function() {
+            console.log('Start Sort By Priority...');
+            this.model.comparator = 'priority';
+            this.model.sort();
+            WishListItemsView.addAll();
         }
+        // initialize: function () {
+        //     console.log('Initializing Wish List Items View');
+        //     this.model.on('sync', this.render, this)
+        // },
+        // render: function () {
+        //     // display content
+        //     $('#wishListItemList').empty(); // remove previous words
+        //     var self = this;
+        //     this.model.each(function (c) {
+        //         console.log(c);
+        //         // var cimg = "<div>" + c.get('word') + "</div>"
+        //         self.$el.append(self.template(c.attributes))
+        //     })
+        // },
+    })
+
+    var wishListItemsView = new WishListItemsView();
+
+});
+
+addNewWish = function() {
+    location.href = "<?php echo base_url() ?>index.php/AddNewWish";
+}
+
+function getPriority(val) {
+    switch (priority) {
+        case "1":
+            return 'A'
+        case "2":
+            return 'B'
+        case "3":
+            return 'C'
     }
-
-
+}
 </script>
