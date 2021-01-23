@@ -17,8 +17,8 @@ if (isset($_POST['email'])) {
     $mail->Host = "smtp.gmail.com";
     $mail->Port = 465; // or 587
     $mail->IsHTML(true);
-    $mail->Username = "chamaradasun1234@gmail.com";
-    $mail->Password = "0772088783";
+    $mail->Username = "hello@mail.com";
+    $mail->Password = "xxxxxx";
     $mail->SetFrom("xxxxxx@xxxxx.com");
     $mail->Subject = "MyWishList.lk";
     $mail->Body = "<h1>MY_WISH_LIST.LK</h1><img src='https://i.ibb.co/wB6rjpN/wish-list-logo-main.png' width='50' height='50' alt='' /><br>
